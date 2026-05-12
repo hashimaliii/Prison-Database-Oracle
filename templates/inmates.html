@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2>Inmate Registry</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addInmateModal">
+                <i class="bi bi-plus-circle"></i> Add New Inmate
+            </button>
+        </div>
+    </div>
+    
+    <div class="card card-custom">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>NIC</th>
+                            <th>Admission Date</th>
+                            <th>Security Class</th>
+                            <th>Crime Category</th>
+                            <th>Assigned Wing</th>
+                            <th>Cell ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inmate in inmates %}
+                        <tr>
+                            <td>{{ inmate.inmate_id }}</td>
+                            <td><strong>{{ inmate.name }}</strong></td>
+                            <td>{{ inmate.nic }}</td>
+                            <td>{{ inmate.admission_date|strftime }}</td>
+                            <td>
+                                {% if inmate.security_class == 'High' %}
+                                    <span class="badge bg-danger">High</span>
+                                {% elif inmate.security_class == 'Medium' %}
+                                    <span class="badge bg-warning text-dark">Medium</span>
+                                {% else %}
+                                    <span class="badge bg-success">Low</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ inmate.crime_category }}</td>
+                            <td>{{ inmate.wing_name or 'Unassigned' }}</td>
+                            <td>{{ inmate.cell_id or 'Unassigned' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Inmate Modal -->
+<div class="modal fade" id="addInmateModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Register New Inmate</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('add_inmate') }}">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">NIC (Format: 12345-1234567-1)</label>
+                            <input type="text" name="nic" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Admission Date</label>
+                            <input type="date" name="admission_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Security Class</label>
+                            <select name="security_class" class="form-select" required>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Crime Category</label>
+                            <input type="text" name="crime_category" class="form-control" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Assign to Cell</label>
+                            <select name="cell_id" class="form-select" required>
+                                <option value="" disabled selected>Select an available cell</option>
+                                {% for cell in cells %}
+                                <option value="{{ cell.cell_id }}">Cell {{ cell.cell_id }} - {{ cell.wing_name }} (Occupancy: {{ cell.current_occupants }}/{{ cell.max_capacity }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register Inmate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

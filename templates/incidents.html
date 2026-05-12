@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2>Incident Reports</h2>
+        </div>
+    </div>
+    
+    <div class="card card-custom">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Incident ID</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Severity (1-5)</th>
+                            <th>Reported By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for incident in incidents %}
+                        <tr>
+                            <td>{{ incident.incident_id }}</td>
+                            <td>{{ incident.description }}</td>
+                            <td>{{ incident.incident_date|strftime }}</td>
+                            <td>
+                                {% if incident.severity >= 4 %}
+                                    <span class="badge bg-danger">Severity {{ incident.severity }}</span>
+                                {% elif incident.severity == 3 %}
+                                    <span class="badge bg-warning text-dark">Severity {{ incident.severity }}</span>
+                                {% else %}
+                                    <span class="badge bg-info text-dark">Severity {{ incident.severity }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ incident.reporter_name or 'Unknown' }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if not incidents %}
+                        <tr><td colspan="5" class="text-center text-muted">No incidents reported.</td></tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
