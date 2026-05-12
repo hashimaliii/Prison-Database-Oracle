@@ -234,3 +234,23 @@ def get_all_incidents():
     finally:
         cursor.close()
         conn.close()
+
+# --- Custom Query ---
+def execute_custom_query(query):
+    conn = get_connection()
+    if not conn: return False, "DB connection failed", None, None
+    cursor = conn.cursor()
+    try:
+        cursor.execute(query)
+        if cursor.description: # SELECT query
+            columns = [col[0] for col in cursor.description]
+            data = cursor.fetchall()
+            return True, "Query executed successfully.", columns, data
+        else: # DML / DDL
+            conn.commit()
+            return True, f"Statement executed successfully. Rows affected: {cursor.rowcount}", None, None
+    except Exception as e:
+        return False, str(e), None, None
+    finally:
+        cursor.close()
+        conn.close()

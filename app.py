@@ -133,6 +133,30 @@ def incidents():
     all_incidents = db.get_all_incidents()
     return render_template('incidents.html', incidents=all_incidents)
 
+# --- Custom SQL Query ---
+@app.route('/query', methods=['GET', 'POST'])
+def query():
+    if 'logged_in' not in session: return redirect(url_for('login'))
+    
+    query_str = ""
+    columns = None
+    data = None
+    error = None
+    success_msg = None
+    
+    if request.method == 'POST':
+        query_str = request.form.get('query', '')
+        if query_str.strip():
+            success, msg, cols, res_data = db.execute_custom_query(query_str)
+            if success:
+                success_msg = msg
+                columns = cols
+                data = res_data
+            else:
+                error = msg
+                
+    return render_template('query.html', query=query_str, columns=columns, data=data, error=error, success=success_msg)
+
 if __name__ == '__main__':
     print("Starting Prison Database Flask Application...")
     if not db.test_connection():
