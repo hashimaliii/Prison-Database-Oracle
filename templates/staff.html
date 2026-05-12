@@ -5,6 +5,11 @@
         <div class="col-md-6">
             <h2>Prison Staff Directory</h2>
         </div>
+        <div class="col-md-6 text-end">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+                <i class="bi bi-person-plus-fill"></i> Add Staff Member
+            </button>
+        </div>
     </div>
     
     <div class="card card-custom">
@@ -19,6 +24,7 @@
                             <th>Contact Info</th>
                             <th>Hire Date</th>
                             <th>Details</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +50,12 @@
                                     Specialty: {{ person.specialty }} | License: {{ person.license_number }}
                                 {% endif %}
                             </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editStaffModal{{ person.staff_id }}"><i class="bi bi-pencil"></i></button>
+                                <form action="{{ url_for('delete_staff', id=person.staff_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this Staff Member?');"><i class="bi bi-trash"></i></button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -52,4 +64,158 @@
         </div>
     </div>
 </div>
+
+<!-- Edit Staff Modals -->
+{% for person in staff %}
+<div class="modal fade" id="editStaffModal{{ person.staff_id }}" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Edit Staff Member</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('edit_staff', id=person.staff_id) }}">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" value="{{ person.name }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Info</label>
+                            <input type="text" name="contact_info" class="form-control" value="{{ person.contact_info }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Hire Date</label>
+                            <input type="date" name="hire_date" class="form-control" value="{{ person.hire_date|strftime }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Staff Role</label>
+                            <select name="staff_type" class="form-select" onchange="toggleEditStaffType(this, {{ person.staff_id }})" required>
+                                <option value="guard" {% if not person.specialty %}selected{% endif %}>Guard</option>
+                                <option value="professional" {% if person.specialty %}selected{% endif %}>Medical / Professional</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Guard Fields -->
+                        <div class="col-md-6 guard-fields-{{ person.staff_id }}" style="display: {% if person.specialty %}none{% else %}block{% endif %};">
+                            <label class="form-label">Rank</label>
+                            <input type="text" name="rank" class="form-control" value="{{ person.rank or '' }}">
+                        </div>
+                        <div class="col-md-6 guard-fields-{{ person.staff_id }}" style="display: {% if person.specialty %}none{% else %}block{% endif %};">
+                            <label class="form-label">Shift Type</label>
+                            <select name="shift_type" class="form-select">
+                                <option value="Day" {% if person.shift_type == 'Day' %}selected{% endif %}>Day</option>
+                                <option value="Night" {% if person.shift_type == 'Night' %}selected{% endif %}>Night</option>
+                                <option value="Rotating" {% if person.shift_type == 'Rotating' %}selected{% endif %}>Rotating</option>
+                            </select>
+                        </div>
+
+                        <!-- Professional Fields -->
+                        <div class="col-md-6 prof-fields-{{ person.staff_id }}" style="display: {% if person.specialty %}block{% else %}none{% endif %};">
+                            <label class="form-label">Specialty</label>
+                            <input type="text" name="specialty" class="form-control" value="{{ person.specialty or '' }}">
+                        </div>
+                        <div class="col-md-6 prof-fields-{{ person.staff_id }}" style="display: {% if person.specialty %}block{% else %}none{% endif %};">
+                            <label class="form-label">License Number</label>
+                            <input type="text" name="license_number" class="form-control" value="{{ person.license_number or '' }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Register New Staff Member</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ url_for('add_staff') }}">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Info (Phone/Email)</label>
+                            <input type="text" name="contact_info" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Hire Date</label>
+                            <input type="date" name="hire_date" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Staff Role</label>
+                            <select name="staff_type" class="form-select" id="staffTypeSelect" required>
+                                <option value="guard" selected>Guard</option>
+                                <option value="professional">Medical / Professional</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Guard Fields -->
+                        <div class="col-md-6 guard-fields">
+                            <label class="form-label">Rank</label>
+                            <input type="text" name="rank" class="form-control">
+                        </div>
+                        <div class="col-md-6 guard-fields">
+                            <label class="form-label">Shift Type</label>
+                            <select name="shift_type" class="form-select">
+                                <option value="Day">Day</option>
+                                <option value="Night">Night</option>
+                                <option value="Rotating">Rotating</option>
+                            </select>
+                        </div>
+
+                        <!-- Professional Fields -->
+                        <div class="col-md-6 prof-fields" style="display:none;">
+                            <label class="form-label">Specialty (e.g., Doctor, Psychologist)</label>
+                            <input type="text" name="specialty" class="form-control">
+                        </div>
+                        <div class="col-md-6 prof-fields" style="display:none;">
+                            <label class="form-label">License Number</label>
+                            <input type="text" name="license_number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register Staff</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('staffTypeSelect').addEventListener('change', function() {
+        if(this.value === 'guard') {
+            document.querySelectorAll('.guard-fields').forEach(e => e.style.display = 'block');
+            document.querySelectorAll('.prof-fields').forEach(e => e.style.display = 'none');
+        } else {
+            document.querySelectorAll('.guard-fields').forEach(e => e.style.display = 'none');
+            document.querySelectorAll('.prof-fields').forEach(e => e.style.display = 'block');
+        }
+    });
+
+    function toggleEditStaffType(selectElem, id) {
+        if(selectElem.value === 'guard') {
+            document.querySelectorAll('.guard-fields-' + id).forEach(e => e.style.display = 'block');
+            document.querySelectorAll('.prof-fields-' + id).forEach(e => e.style.display = 'none');
+        } else {
+            document.querySelectorAll('.guard-fields-' + id).forEach(e => e.style.display = 'none');
+            document.querySelectorAll('.prof-fields-' + id).forEach(e => e.style.display = 'block');
+        }
+    }
+</script>
 {% endblock %}
