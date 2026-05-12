@@ -2,7 +2,7 @@ import oracledb
 from werkzeug.security import check_password_hash
 
 # Database Configuration
-DB_USER = "system"
+DB_USER = "HR"
 DB_PASSWORD = "123"
 DB_DSN = "localhost:1521/xe"
 

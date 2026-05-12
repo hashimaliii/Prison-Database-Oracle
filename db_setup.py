@@ -5,7 +5,7 @@ import os
 # Database Connection Configuration
 # Update these with your Oracle 11g details
 # ==========================================
-DB_USER = "system" 
+DB_USER = "HR" 
 DB_PASSWORD = "123" 
 DB_DSN = "localhost:1521/xe" # e.g., localhost:1521/xe or ORCL
 
