@@ -133,7 +133,7 @@ def incidents():
     all_incidents = db.get_all_incidents()
     return render_template('incidents.html', incidents=all_incidents)
 
-# --- Custom SQL Query ---
+# --- Custom SQL Query & Script Runner ---
 @app.route('/query', methods=['GET', 'POST'])
 def query():
     if 'logged_in' not in session: return redirect(url_for('login'))
@@ -143,10 +143,36 @@ def query():
     data = None
     error = None
     success_msg = None
+    script_results = []
     
     if request.method == 'POST':
+        # Handle Script Uploads
+        if 'sql_files' in request.files:
+            files = request.files.getlist('sql_files')
+            for file in files:
+                if file and file.filename:
+                    is_plsql = 'plsql' in file.filename.lower()
+                    try:
+                        content = file.read().decode('utf-8')
+                        if content.strip():
+                            success, msg, res = db.execute_sql_script(content, is_plsql)
+                            script_results.append({
+                                "filename": file.filename,
+                                "success": success,
+                                "msg": msg,
+                                "statements": res
+                            })
+                    except Exception as e:
+                        script_results.append({
+                            "filename": file.filename,
+                            "success": False,
+                            "msg": str(e),
+                            "statements": []
+                        })
+                        
+        # Handle Raw Query
         query_str = request.form.get('query', '')
-        if query_str.strip():
+        if query_str and query_str.strip():
             success, msg, cols, res_data = db.execute_custom_query(query_str)
             if success:
                 success_msg = msg
@@ -155,7 +181,7 @@ def query():
             else:
                 error = msg
                 
-    return render_template('query.html', query=query_str, columns=columns, data=data, error=error, success=success_msg)
+    return render_template('query.html', query=query_str, columns=columns, data=data, error=error, success=success_msg, script_results=script_results)
 
 if __name__ == '__main__':
     print("Starting Prison Database Flask Application...")
