@@ -19,45 +19,45 @@ INSERT INTO visitor (visitor_id, name, nic, relation_to_inmate) VALUES (6, 'Kash
 
 -- 3. Inmates (Requirement: 15-20 rows)
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Ahmed Hassan', '33102-1234567-1', TO_DATE('2024-01-15', 'YYYY-MM-DD'), 'High', 'Felony', 101);
+VALUES (100, 'Ahmed Hassan', '33102-1234567-1', TO_DATE('2024-01-15', 'YYYY-MM-DD'), 'High', 'Felony', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Zain Ul Abidin', '33102-7654321-2', TO_DATE('2025-02-10', 'YYYY-MM-DD'), 'Low', 'Misdemeanor', 102);
+VALUES (101, 'Zain Ul Abidin', '33102-7654321-2', TO_DATE('2025-02-10', 'YYYY-MM-DD'), 'Low', 'Misdemeanor', 102);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Muhammad Ali', '33102-1112223-3', TO_DATE('2023-05-12', 'YYYY-MM-DD'), 'High', 'Robbery', 101);
+VALUES (102, 'Muhammad Ali', '33102-1112223-3', TO_DATE('2023-05-12', 'YYYY-MM-DD'), 'High', 'Robbery', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Umar Farooq', '33102-4445556-6', TO_DATE('2024-08-20', 'YYYY-MM-DD'), 'Medium', 'Fraud', 102);
+VALUES (103, 'Umar Farooq', '33102-4445556-6', TO_DATE('2024-08-20', 'YYYY-MM-DD'), 'Medium', 'Fraud', 102);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Hamza Shehbaz', '33102-7778889-9', TO_DATE('2025-01-05', 'YYYY-MM-DD'), 'Low', 'Trespassing', 103);
+VALUES (104, 'Hamza Shehbaz', '33102-7778889-9', TO_DATE('2025-01-05', 'YYYY-MM-DD'), 'Low', 'Trespassing', 103);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Bilal Ahmed', '33102-1212121-1', TO_DATE('2024-11-30', 'YYYY-MM-DD'), 'High', 'Assault', 104);
+VALUES (105, 'Bilal Ahmed', '33102-1212121-1', TO_DATE('2024-11-30', 'YYYY-MM-DD'), 'High', 'Assault', 104);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Usman Tariq', '33102-3434343-4', TO_DATE('2023-12-15', 'YYYY-MM-DD'), 'Medium', 'Theft', 104);
+VALUES (106, 'Usman Tariq', '33102-3434343-4', TO_DATE('2023-12-15', 'YYYY-MM-DD'), 'Medium', 'Theft', 104);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Zubair Shah', '33102-1231234-5', TO_DATE('2024-03-10', 'YYYY-MM-DD'), 'High', 'Burglary', 101);
+VALUES (107, 'Zubair Shah', '33102-1231234-5', TO_DATE('2024-03-10', 'YYYY-MM-DD'), 'High', 'Burglary', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Irfan Junejo', '33102-5554443-2', TO_DATE('2025-01-20', 'YYYY-MM-DD'), 'Medium', 'Cybercrime', 105);
+VALUES (108, 'Irfan Junejo', '33102-5554443-2', TO_DATE('2025-01-20', 'YYYY-MM-DD'), 'Medium', 'Cybercrime', 105);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Murtaza Javed', '33102-9876543-1', TO_DATE('2023-11-11', 'YYYY-MM-DD'), 'Low', 'Vandalism', 105);
+VALUES (109, 'Murtaza Javed', '33102-9876543-1', TO_DATE('2023-11-11', 'YYYY-MM-DD'), 'Low', 'Vandalism', 105);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Salman Khan', '33102-0000001-1', TO_DATE('2024-06-01', 'YYYY-MM-DD'), 'Medium', 'Theft', 102);
+VALUES (110, 'Salman Khan', '33102-0000001-1', TO_DATE('2024-06-01', 'YYYY-MM-DD'), 'Medium', 'Theft', 102);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Asad Ullah', '33102-0000002-2', TO_DATE('2024-07-15', 'YYYY-MM-DD'), 'High', 'Assault', 101);
+VALUES (111, 'Asad Ullah', '33102-0000002-2', TO_DATE('2024-07-15', 'YYYY-MM-DD'), 'High', 'Assault', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Riaz Ahmed', '33102-0000003-3', TO_DATE('2023-09-10', 'YYYY-MM-DD'), 'Low', 'Trespassing', 103);
+VALUES (112, 'Riaz Ahmed', '33102-0000003-3', TO_DATE('2023-09-10', 'YYYY-MM-DD'), 'Low', 'Trespassing', 103);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Qasim Ali', '33102-0000004-4', TO_DATE('2025-03-05', 'YYYY-MM-DD'), 'Medium', 'Fraud', 102);
+VALUES (113, 'Qasim Ali', '33102-0000004-4', TO_DATE('2025-03-05', 'YYYY-MM-DD'), 'Medium', 'Fraud', 102);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Faizan Malik', '33102-0000005-5', TO_DATE('2024-12-25', 'YYYY-MM-DD'), 'High', 'Robbery', 101);
+VALUES (114, 'Faizan Malik', '33102-0000005-5', TO_DATE('2024-12-25', 'YYYY-MM-DD'), 'High', 'Robbery', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Hassan Raza', '33102-0000006-6', TO_DATE('2024-02-14', 'YYYY-MM-DD'), 'Low', 'Vandalism', 105);
+VALUES (115, 'Hassan Raza', '33102-0000006-6', TO_DATE('2024-02-14', 'YYYY-MM-DD'), 'Low', 'Vandalism', 105);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Abid Hussain', '33102-0000007-7', TO_DATE('2023-10-30', 'YYYY-MM-DD'), 'Medium', 'Burglary', 104);
+VALUES (116, 'Abid Hussain', '33102-0000007-7', TO_DATE('2023-10-30', 'YYYY-MM-DD'), 'Medium', 'Burglary', 104);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Imran Khan', '33102-0000008-8', TO_DATE('2024-05-20', 'YYYY-MM-DD'), 'High', 'Cybercrime', 101);
+VALUES (117, 'Imran Khan', '33102-0000008-8', TO_DATE('2024-05-20', 'YYYY-MM-DD'), 'High', 'Cybercrime', 101);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Shahid Afridi', '33102-0000009-9', TO_DATE('2025-04-12', 'YYYY-MM-DD'), 'Low', 'Trespassing', 105);
+VALUES (118, 'Shahid Afridi', '33102-0000009-9', TO_DATE('2025-04-12', 'YYYY-MM-DD'), 'Low', 'Trespassing', 105);
 INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-VALUES (inmate_seq.NEXTVAL, 'Babar Azam', '33102-0000010-0', TO_DATE('2024-08-01', 'YYYY-MM-DD'), 'Medium', 'Theft', 102);
+VALUES (119, 'Babar Azam', '33102-0000010-0', TO_DATE('2024-08-01', 'YYYY-MM-DD'), 'Medium', 'Theft', 102);
 
 
 INSERT INTO visitation_log (visitor_id, inmate_id, visit_start_time, visit_end_time, purpose)
@@ -95,11 +95,11 @@ INSERT INTO visitation_log VALUES (5, 108, TO_DATE('2026-05-29 15:00', 'YYYY-MM-
 INSERT INTO visitation_log VALUES (6, 109, TO_DATE('2026-05-29 16:30', 'YYYY-MM-DD HH24:MI'), TO_DATE('2026-05-29 17:30', 'YYYY-MM-DD HH24:MI'), 'Final Appeal Check');
 
 -- First, insert into the Parent table (staff)
-INSERT INTO staff (staff_id, name, contact_info) VALUES (staff_seq.NEXTVAL, 'Major Arshad', '0300-1112223');
-INSERT INTO staff (staff_id, name, contact_info) VALUES (staff_seq.NEXTVAL, 'Officer Kamran', '0300-7778889');
-INSERT INTO staff (staff_id, name, contact_info) VALUES (staff_seq.NEXTVAL, 'Dr. Sarah Ahmed', '0300-4445556');
-INSERT INTO staff (staff_id, name, contact_info) VALUES (staff_seq.NEXTVAL, 'Officer Zaid', '0321-9990001');   
-INSERT INTO staff (staff_id, name, contact_info) VALUES (staff_seq.NEXTVAL, 'Major Bilal', '0321-8887776');  
+INSERT INTO staff (staff_id, name, contact_info) VALUES (500, 'Major Arshad', '0300-1112223');
+INSERT INTO staff (staff_id, name, contact_info) VALUES (501, 'Officer Kamran', '0300-7778889');
+INSERT INTO staff (staff_id, name, contact_info) VALUES (502, 'Dr. Sarah Ahmed', '0300-4445556');
+INSERT INTO staff (staff_id, name, contact_info) VALUES (503, 'Officer Zaid', '0321-9990001');   
+INSERT INTO staff (staff_id, name, contact_info) VALUES (504, 'Major Bilal', '0321-8887776');  
 
 -- Second, insert into the Sub-entity tables using those specific IDs
 -- Guards
@@ -111,4 +111,4 @@ INSERT INTO guard (staff_id, rank, shift_type) VALUES (504, 'Senior Warden', 'Ni
 -- Professionals (Doctors/Psychiatrists)
 INSERT INTO professional (staff_id, specialty, license_number) VALUES (502, 'General Physician', 'PMDC-99887');
 
-COMMIT;​
+COMMIT;
