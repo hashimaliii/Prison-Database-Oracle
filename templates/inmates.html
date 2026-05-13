@@ -183,7 +183,9 @@
                                                 <select name="staff_id" class="form-select" required>
                                                     <option value="{{ med.staff_id }}" selected>Current: {{ med.staff_name }} (ID: {{ med.staff_id }})</option>
                                                     {% for s in staff %}
-                                                    <option value="{{ s.staff_id }}">{{ s.name }} (ID: {{ s.staff_id }})</option>
+                                                    {% if s.specialty %}
+                                                    <option value="{{ s.staff_id }}">{{ s.name }} ({{ s.specialty }})</option>
+                                                    {% endif %}
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -293,7 +295,9 @@
                         <select name="staff_id" class="form-select" required>
                             <option value="" disabled selected>Select Staff</option>
                             {% for s in staff %}
-                            <option value="{{ s.staff_id }}">{{ s.name }} (ID: {{ s.staff_id }})</option>
+                            {% if s.specialty %}
+                            <option value="{{ s.staff_id }}">{{ s.name }} ({{ s.specialty }})</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
