@@ -12,7 +12,6 @@ DB_DSN = "localhost:1521/xe" # e.g., localhost:1521/xe or ORCL
 # Ordered list of SQL files for setup
 SQL_FILES = [
     '10_drop_all.sql',
-    '09_plsql.sql',
     '01_create_tables.sql',
     '02_constraints.sql',
     '03_sequences.sql',
@@ -20,6 +19,8 @@ SQL_FILES = [
     '05_insert_data.sql',
     '07_views.sql',
     '08_dcl.sql',
+    '11_resync_sequences.sql',
+    '09_plsql.sql',
 ]
 
 def execute_sql_file(cursor, filepath):

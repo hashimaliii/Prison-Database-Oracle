@@ -176,16 +176,13 @@ def add_staff(data):
     if not conn: return False, "DB connection failed"
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT NVL(MAX(staff_id), 0) + 1 FROM staff")
-        new_id = cursor.fetchone()[0]
-        
-        cursor.execute("INSERT INTO staff (staff_id, name, contact_info, hire_date) VALUES (:1, :2, :3, TO_DATE(:4, 'YYYY-MM-DD'))",
-                       (new_id, data['name'], data['contact_info'], data['hire_date']))
+        cursor.execute("INSERT INTO staff (staff_id, name, contact_info, hire_date) VALUES (staff_seq.NEXTVAL, :1, :2, TO_DATE(:3, 'YYYY-MM-DD'))",
+                       (data['name'], data['contact_info'], data['hire_date']))
         
         if data['staff_type'] == 'guard':
-            cursor.execute("INSERT INTO guard (staff_id, rank, shift_type) VALUES (:1, :2, :3)", (new_id, data['rank'], data['shift_type']))
+            cursor.execute("INSERT INTO guard (staff_id, rank, shift_type) VALUES (staff_seq.CURRVAL, :1, :2)", (data['rank'], data['shift_type']))
         elif data['staff_type'] == 'professional':
-            cursor.execute("INSERT INTO professional (staff_id, specialty, license_number) VALUES (:1, :2, :3)", (new_id, data['specialty'], data['license_number']))
+            cursor.execute("INSERT INTO professional (staff_id, specialty, license_number) VALUES (staff_seq.CURRVAL, :1, :2)", (data['specialty'], data['license_number']))
             
         conn.commit()
         return True, "Staff added."
@@ -407,10 +404,8 @@ def add_incident(data):
     if not conn: return False, "DB connection failed"
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT NVL(MAX(incident_id), 0) + 1 FROM incident_report")
-        new_id = cursor.fetchone()[0]
-        cursor.execute("INSERT INTO incident_report (incident_id, description, incident_date, severity, reporter_id) VALUES (:1, :2, TO_DATE(:3, 'YYYY-MM-DD'), :4, :5)", 
-                       (new_id, data['description'], data['incident_date'], data['severity'], data['reporter_id']))
+        cursor.execute("INSERT INTO incident_report (incident_id, description, incident_date, severity, reporter_id) VALUES (incident_seq.NEXTVAL, :1, TO_DATE(:2, 'YYYY-MM-DD'), :3, :4)", 
+                       (data['description'], data['incident_date'], data['severity'], data['reporter_id']))
         conn.commit()
         return True, "Incident added."
     except oracledb.DatabaseError as e:
