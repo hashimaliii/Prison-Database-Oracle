@@ -22,6 +22,7 @@
                             <th>Name</th>
                             <th>NIC</th>
                             <th>Admission Date</th>
+                            <th>Release Date</th>
                             <th>Security Class</th>
                             <th>Crime Category</th>
                             <th>Assigned Wing</th>
@@ -36,6 +37,7 @@
                             <td><strong>{{ inmate.name }}</strong></td>
                             <td>{{ inmate.nic }}</td>
                             <td>{{ inmate.admission_date|strftime }}</td>
+                            <td>{{ inmate.release_date|strftime if inmate.release_date else 'N/A' }}</td>
                             <td>
                                 {% if inmate.security_class == 'High' %}
                                     <span class="badge bg-danger">High</span>
@@ -75,11 +77,15 @@
                                                     <label class="form-label">NIC (Format: 12345-1234567-1)</label>
                                                     <input type="text" name="nic" class="form-control" value="{{ inmate.nic }}" required>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <label class="form-label">Admission Date</label>
                                                     <input type="date" name="admission_date" class="form-control" value="{{ inmate.admission_date|strftime }}" required>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
+                                                    <label class="form-label">Release Date</label>
+                                                    <input type="date" name="release_date" class="form-control" value="{{ inmate.release_date|strftime if inmate.release_date else '' }}">
+                                                </div>
+                                                <div class="col-md-3">
                                                     <label class="form-label">Security Class</label>
                                                     <select name="security_class" class="form-select" required>
                                                         <option value="Low" {% if inmate.security_class == 'Low' %}selected{% endif %}>Low</option>
@@ -87,7 +93,7 @@
                                                         <option value="High" {% if inmate.security_class == 'High' %}selected{% endif %}>High</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <label class="form-label">Crime Category</label>
                                                     <input type="text" name="crime_category" class="form-control" value="{{ inmate.crime_category }}" required>
                                                 </div>
@@ -235,11 +241,15 @@
                             <label class="form-label">NIC (Format: 12345-1234567-1)</label>
                             <input type="text" name="nic" class="form-control" required>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Admission Date</label>
                             <input type="date" name="admission_date" class="form-control" required>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <label class="form-label">Release Date</label>
+                            <input type="date" name="release_date" class="form-control">
+                        </div>
+                        <div class="col-md-3">
                             <label class="form-label">Security Class</label>
                             <select name="security_class" class="form-select" required>
                                 <option value="Low">Low</option>
@@ -247,7 +257,7 @@
                                 <option value="High">High</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Crime Category</label>
                             <input type="text" name="crime_category" class="form-control" required>
                         </div>

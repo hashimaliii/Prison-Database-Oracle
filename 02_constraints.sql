@@ -18,4 +18,4 @@ ALTER TABLE visitation_log ADD CONSTRAINT fk_visit_visitor
 
 ALTER TABLE visitation_log ADD CONSTRAINT fk_visit_inmate
     FOREIGN KEY (inmate_id) REFERENCES inmate(inmate_id) ON DELETE CASCADE;
-COMMIT;​
+COMMIT;

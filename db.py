@@ -60,7 +60,7 @@ def get_all_inmates():
     cursor = conn.cursor()
     try:
         query = """
-            SELECT i.inmate_id, i.name, i.nic, i.admission_date, i.security_class, i.crime_category, c.cell_id, w.wing_name
+            SELECT i.inmate_id, i.name, i.nic, i.admission_date, i.release_date, i.security_class, i.crime_category, c.cell_id, w.wing_name
             FROM inmate i
             LEFT JOIN cell c ON i.cell_id = c.cell_id
             LEFT JOIN wing w ON c.wing_id = w.wing_id
@@ -81,9 +81,19 @@ def add_inmate(data):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            INSERT INTO inmate (inmate_id, name, nic, admission_date, security_class, crime_category, cell_id)
-            VALUES (inmate_seq.NEXTVAL, :name, :nic, TO_DATE(:admission_date, 'YYYY-MM-DD'), :security_class, :crime_category, :cell_id)
-        """, (data['name'], data['nic'], data['admission_date'], data['security_class'], data['crime_category'], data['cell_id']))
+            INSERT INTO inmate (inmate_id, name, nic, admission_date, release_date, security_class, crime_category, cell_id)
+            VALUES (inmate_seq.NEXTVAL, :name, :nic, TO_DATE(:admission_date, 'YYYY-MM-DD'), 
+                    CASE WHEN :release_date IS NOT NULL THEN TO_DATE(:release_date, 'YYYY-MM-DD') ELSE NULL END, 
+                    :security_class, :crime_category, :cell_id)
+        """, {
+            'name': data['name'], 
+            'nic': data['nic'], 
+            'admission_date': data['admission_date'], 
+            'release_date': data.get('release_date') or None, 
+            'security_class': data['security_class'], 
+            'crime_category': data['crime_category'], 
+            'cell_id': data['cell_id']
+        })
         conn.commit()
         return True, "Inmate added."
     except oracledb.DatabaseError as e:
@@ -98,10 +108,21 @@ def update_inmate(inmate_id, data):
     cursor = conn.cursor()
     try:
         cursor.execute("""
-            UPDATE inmate SET name=:name, nic=:nic, admission_date=TO_DATE(:admission_date, 'YYYY-MM-DD'),
+            UPDATE inmate SET name=:name, nic=:nic, 
+            admission_date=TO_DATE(:admission_date, 'YYYY-MM-DD'),
+            release_date=CASE WHEN :release_date IS NOT NULL THEN TO_DATE(:release_date, 'YYYY-MM-DD') ELSE NULL END,
             security_class=:security_class, crime_category=:crime_category, cell_id=:cell_id
             WHERE inmate_id = :id
-        """, (data['name'], data['nic'], data['admission_date'], data['security_class'], data['crime_category'], data['cell_id'], inmate_id))
+        """, {
+            'name': data['name'], 
+            'nic': data['nic'], 
+            'admission_date': data['admission_date'], 
+            'release_date': data.get('release_date') or None, 
+            'security_class': data['security_class'], 
+            'crime_category': data['crime_category'], 
+            'cell_id': data['cell_id'], 
+            'id': inmate_id
+        })
         conn.commit()
         return True, "Inmate updated."
     except oracledb.DatabaseError as e:

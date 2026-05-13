@@ -94,7 +94,9 @@ def add_inmate():
     if 'logged_in' not in session: return redirect(url_for('login'))
     data = {
         'name': request.form['name'], 'nic': request.form['nic'], 
-        'admission_date': request.form['admission_date'], 'security_class': request.form['security_class'],
+        'admission_date': request.form['admission_date'], 
+        'release_date': request.form.get('release_date'),
+        'security_class': request.form['security_class'],
         'crime_category': request.form['crime_category'], 'cell_id': request.form['cell_id']
     }
     success, msg = db.add_inmate(data)
@@ -106,7 +108,9 @@ def edit_inmate(id):
     if 'logged_in' not in session: return redirect(url_for('login'))
     data = {
         'name': request.form['name'], 'nic': request.form['nic'], 
-        'admission_date': request.form['admission_date'], 'security_class': request.form['security_class'],
+        'admission_date': request.form['admission_date'],
+        'release_date': request.form.get('release_date'),
+        'security_class': request.form['security_class'],
         'crime_category': request.form['crime_category'], 'cell_id': request.form['cell_id']
     }
     success, msg = db.update_inmate(id, data)
